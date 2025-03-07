@@ -2,7 +2,8 @@ import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Task } from '../../types/task';
-import { colors } from '../../utils/colors';
+import { useTheme } from '../../context/ThemeContext';
+import { getColors } from '../../utils/colors';
 import { styles } from './styles';
 
 interface TaskCardProps {
@@ -13,17 +14,26 @@ interface TaskCardProps {
 }
 
 const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onEdit, onDelete }) => {
+    const { isDarkMode } = useTheme();
+    const colors = getColors(isDarkMode);
+
     const formattedDueDate = new Date(task.dueDate).toLocaleDateString();
     const isOverdue = !task.completed && new Date(task.dueDate) < new Date();
 
     return (
         <View style={styles.container}>
             <View style={styles.dateContainer}>
-                <Text style={[styles.dateText, isOverdue && styles.overdueText]}>
+                <Text
+                    style={[
+                        styles.dateText,
+                        { color: colors.textSecondary },
+                        isOverdue && { color: colors.error }
+                    ]}
+                >
                     Due: {formattedDueDate}
                 </Text>
             </View>
-            <View style={styles.taskContainer}>
+            <View style={[styles.taskContainer, { backgroundColor: colors.surface }]}>
                 <TouchableOpacity
                     style={styles.checkbox}
                     onPress={() => onToggle(task.id)}>
@@ -37,13 +47,21 @@ const TaskCard: React.FC<TaskCardProps> = ({ task, onToggle, onEdit, onDelete })
                     <Text
                         style={[
                             styles.title,
-                            task.completed && styles.completedText,
+                            { color: colors.text },
+                            task.completed && {
+                                textDecorationLine: 'line-through',
+                                color: colors.textSecondary
+                            },
                         ]}>
                         {task.title}
                     </Text>
-                    <Text style={styles.note}>{task.note}</Text>
-                    <View style={styles.typeContainer}>
-                        <Text style={styles.typeText}>{task.type}</Text>
+                    <Text style={[styles.note, { color: colors.textSecondary }]}>
+                        {task.note}
+                    </Text>
+                    <View style={[styles.typeContainer, { backgroundColor: colors.surface }]}>
+                        <Text style={[styles.typeText, { color: colors.text }]}>
+                            {task.type}
+                        </Text>
                     </View>
                 </View>
                 <View style={styles.actions}>

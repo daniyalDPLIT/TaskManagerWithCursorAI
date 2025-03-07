@@ -1,5 +1,4 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../utils/colors';
 import { wp, hp } from '../../utils/responsive';
 
 export const styles = StyleSheet.create({
@@ -9,11 +8,13 @@ export const styles = StyleSheet.create({
     header: {
         padding: wp(5),
         paddingTop: hp(5),
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     },
     title: {
         fontSize: wp(7),
         fontWeight: 'bold',
-        color: colors.text,
     },
     cardsContainer: {
         flexDirection: 'row',
@@ -29,7 +30,7 @@ export const styles = StyleSheet.create({
         marginBottom: wp(4),
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: colors.black,
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -41,13 +42,11 @@ export const styles = StyleSheet.create({
     cardTitle: {
         fontSize: wp(4),
         fontWeight: '600',
-        color: colors.white,
         marginTop: hp(1),
     },
     cardCount: {
         fontSize: wp(6),
         fontWeight: 'bold',
-        color: colors.white,
         marginTop: hp(0.5),
     },
     addButton: {
@@ -57,10 +56,9 @@ export const styles = StyleSheet.create({
         width: wp(15),
         height: wp(15),
         borderRadius: wp(7.5),
-        backgroundColor: colors.primary,
         justifyContent: 'center',
         alignItems: 'center',
-        shadowColor: colors.black,
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -82,18 +80,15 @@ export const styles = StyleSheet.create({
     },
     errorText: {
         fontSize: wp(4),
-        color: colors.error,
         textAlign: 'center',
         marginBottom: hp(2),
     },
     retryButton: {
-        backgroundColor: colors.primary,
         paddingHorizontal: wp(5),
         paddingVertical: hp(1),
         borderRadius: 8,
     },
     retryButtonText: {
-        color: colors.white,
         fontSize: wp(4),
         fontWeight: '600',
     },

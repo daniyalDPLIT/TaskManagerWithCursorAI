@@ -1,26 +1,23 @@
-import React, { useEffect } from 'react';
-import { View, Text, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { colors } from '../../utils/colors';
-import { wp } from '../../utils/responsive';
-import { useAppSelector, useAppDispatch } from '../../redux/store';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from '../../routes/AppNavigator';
-import { styles } from './styles';
+import React from 'react';
+import { ActivityIndicator, ScrollView, Text, TouchableOpacity, View } from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons';
 import ScreenWrapper from '../../components/ScreenWrapper';
-import { fetchTasks } from '../../redux/slices/taskSlice';
+import { useTheme } from '../../context/ThemeContext';
+import { RootStackParamList } from '../../routes/AppNavigator';
+import { useGetTasksQuery } from '../../services/taskApi';
+import { getColors } from '../../utils/colors';
+import { wp } from '../../utils/responsive';
+import { styles } from './styles';
 
 type HomeScreenNavigationProp = NativeStackNavigationProp<RootStackParamList, 'Home'>;
 
 const HomeScreen = () => {
     const navigation = useNavigation<HomeScreenNavigationProp>();
-    const dispatch = useAppDispatch();
-    const { tasks, loading, error } = useAppSelector(state => state.tasks);
-
-    useEffect(() => {
-        dispatch(fetchTasks());
-    }, [dispatch]);
+    const { data: tasks = [], isLoading, error, refetch } = useGetTasksQuery();
+    const { isDarkMode } = useTheme();
+    const colors = getColors(isDarkMode);
 
     const stats = {
         all: tasks.length,
@@ -36,7 +33,7 @@ const HomeScreen = () => {
         completed: tasks.filter(task => task.completed).length,
     };
 
-    if (loading) {
+    if (isLoading) {
         return (
             <ScreenWrapper>
                 <View style={styles.loadingContainer}>
@@ -50,11 +47,11 @@ const HomeScreen = () => {
         return (
             <ScreenWrapper>
                 <View style={styles.errorContainer}>
-                    <Text style={styles.errorText}>{error}</Text>
+                    <Text style={[styles.errorText, { color: colors.error }]}>Failed to fetch tasks</Text>
                     <TouchableOpacity
-                        style={styles.retryButton}
-                        onPress={() => dispatch(fetchTasks())}>
-                        <Text style={styles.retryButtonText}>Retry</Text>
+                        style={[styles.retryButton, { backgroundColor: colors.primary }]}
+                        onPress={refetch}>
+                        <Text style={[styles.retryButtonText, { color: colors.white }]}>Retry</Text>
                     </TouchableOpacity>
                 </View>
             </ScreenWrapper>
@@ -63,38 +60,38 @@ const HomeScreen = () => {
 
     return (
         <ScreenWrapper>
-            <ScrollView style={styles.scrollView}>
+            <ScrollView style={[styles.scrollView, { backgroundColor: colors.background }]}>
                 <View style={styles.header}>
-                    <Text style={styles.title}>Task Manager</Text>
+                    <Text style={[styles.title, { color: colors.text }]}>Task Manager</Text>
                 </View>
                 <View style={styles.cardsContainer}>
                     <TouchableOpacity
                         style={[styles.card, { backgroundColor: colors.primary }]}
                         onPress={() => navigation.navigate('All', { type: 'All' })}>
                         <Icon name="list" size={wp(10)} color={colors.white} />
-                        <Text style={styles.cardTitle}>All</Text>
-                        <Text style={styles.cardCount}>{stats.all}</Text>
+                        <Text style={[styles.cardTitle, { color: colors.white }]}>All</Text>
+                        <Text style={[styles.cardCount, { color: colors.white }]}>{stats.all}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.card, { backgroundColor: colors.success }]}
                         onPress={() => navigation.navigate('Today', { type: 'Today' })}>
                         <Icon name="today" size={wp(10)} color={colors.white} />
-                        <Text style={styles.cardTitle}>Today</Text>
-                        <Text style={styles.cardCount}>{stats.today}</Text>
+                        <Text style={[styles.cardTitle, { color: colors.white }]}>Today</Text>
+                        <Text style={[styles.cardCount, { color: colors.white }]}>{stats.today}</Text>
                     </TouchableOpacity>
 
                     <TouchableOpacity
                         style={[styles.card, { backgroundColor: colors.info }]}
                         onPress={() => navigation.navigate('Completed', { type: 'Completed' })}>
                         <Icon name="checkmark-circle" size={wp(10)} color={colors.white} />
-                        <Text style={styles.cardTitle}>Completed</Text>
-                        <Text style={styles.cardCount}>{stats.completed}</Text>
+                        <Text style={[styles.cardTitle, { color: colors.white }]}>Completed</Text>
+                        <Text style={[styles.cardCount, { color: colors.white }]}>{stats.completed}</Text>
                     </TouchableOpacity>
                 </View>
             </ScrollView>
             <TouchableOpacity
-                style={styles.addButton}
+                style={[styles.addButton, { backgroundColor: colors.primary }]}
                 onPress={() => navigation.navigate('AddTask', {})}>
                 <Icon name="add" size={wp(8)} color={colors.white} />
             </TouchableOpacity>

@@ -1,6 +1,6 @@
 import { StyleSheet } from 'react-native';
-import { colors } from '../../utils/colors';
 import { wp, hp } from '../../utils/responsive';
+import colors from '../../utils/colors';
 
 export const styles = StyleSheet.create({
     container: {
@@ -12,7 +12,6 @@ export const styles = StyleSheet.create({
     },
     dateText: {
         fontSize: wp(3.5),
-        color: colors.textSecondary,
         fontWeight: '500',
     },
     overdueText: {
@@ -20,10 +19,9 @@ export const styles = StyleSheet.create({
     },
     taskContainer: {
         flexDirection: 'row',
-        backgroundColor: colors.background,
         borderRadius: 10,
         padding: wp(4),
-        shadowColor: colors.black,
+        shadowColor: '#000',
         shadowOffset: {
             width: 0,
             height: 2,
@@ -42,7 +40,6 @@ export const styles = StyleSheet.create({
     title: {
         fontSize: wp(4),
         fontWeight: '600',
-        color: colors.text,
         marginBottom: hp(0.5),
     },
     completedText: {
@@ -51,11 +48,9 @@ export const styles = StyleSheet.create({
     },
     note: {
         fontSize: wp(3.5),
-        color: colors.textSecondary,
         marginBottom: hp(0.5),
     },
     typeContainer: {
-        backgroundColor: colors.lightGray,
         paddingHorizontal: wp(2),
         paddingVertical: hp(0.3),
         borderRadius: 4,
@@ -63,7 +58,6 @@ export const styles = StyleSheet.create({
     },
     typeText: {
         fontSize: wp(3),
-        color: colors.text,
         textTransform: 'capitalize',
     },
     actions: {

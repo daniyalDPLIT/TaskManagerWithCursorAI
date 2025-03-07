@@ -1,18 +1,51 @@
-export const colors = {
-    primary: '#007AFF',
-    secondary: '#5856D6',
-    background: '#FFFFFF',
+const colors = {
+    primary: '#007aff',
+    background: '#ffffff',
+    surface: '#f2f2f7',
     text: '#000000',
-    textSecondary: '#8E8E93',
-    border: '#C6C6C8',
+    textSecondary: '#6c6c6c',
+    border: '#e5e5ea',
+    error: '#ff3b30',
+    success: '#34c759',
+    info: '#5856d6',
+    white: '#ffffff',
+    black: '#000000',
+    gray: '#8e8e93',
+};
+
+export default colors;
+
+export const lightColors = {
+    primary: '#007AFF',
+    background: '#FFFFFF',
+    surface: '#F2F2F7',
+    text: '#000000',
+    textSecondary: '#6C6C6C',
+    border: '#E5E5EA',
     error: '#FF3B30',
     success: '#34C759',
-    warning: '#FF9500',
     info: '#5856D6',
     white: '#FFFFFF',
     black: '#000000',
     gray: '#8E8E93',
-    lightGray: '#C6C6C8',
-    darkGray: '#3C3C43',
-    transparent: 'transparent',
-}; 
+};
+
+export const darkColors = {
+    primary: '#0A84FF',
+    background: '#000000',
+    surface: '#1C1C1E',
+    text: '#FFFFFF',
+    textSecondary: '#EBEBF5',
+    border: '#38383A',
+    error: '#FF453A',
+    success: '#32D74B',
+    info: '#5E5CE6',
+    white: '#FFFFFF',
+    black: '#000000',
+    gray: '#8E8E93',
+};
+
+export const getColors = (isDarkMode: boolean) =>
+    isDarkMode ? darkColors : lightColors;
+
+export type Colors = typeof lightColors; 

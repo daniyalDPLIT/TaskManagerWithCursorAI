@@ -1,6 +1,6 @@
 import { StyleSheet, ViewStyle, TextStyle } from 'react-native';
-import { wp, hp } from '../../utils/responsive';
-import colors from '../../utils/colors';
+import { wp, hp } from '../../../utils/responsive';
+import colors from '../../../utils/colors';
 
 type CustomTextStyle = TextStyle & {
     textAlignVertical?: 'auto' | 'top' | 'bottom' | 'center';
